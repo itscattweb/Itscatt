@@ -16,9 +16,9 @@ const lato = Lato({
 
 export const metadata: Metadata = {
   icons: {
-    icon: "/images/icon.png",
-    shortcut: "/images/icon.png",
-    apple: "/images/icon.png",
+    icon: "/images/logo.jpg",
+    shortcut: "/images/logo.jpg",
+    apple: "/images/logo.jpg",
   },
   title: "ITSSCAT-India | Transforming Lives Through Education",
   description:
