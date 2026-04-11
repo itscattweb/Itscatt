@@ -1,19 +1,36 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabaseClient";
 
-const slides = [
-  { src: "/images/hero.jpg" },
-  { src: "/images/hero1.jpg" },
-  { src: "/images/hero2.jpg" },
-  { src: "/images/hero3.jpg" },
-];
+// ── Type definition ──
+type Slide = {
+  id: number;
+  image_url: string;
+  order_index: number;
+};
 
 export default function AboutHero() {
-  const [current, setCurrent] = useState(0);
-  const [fading, setFading] = useState(false);
+  const [slides, setSlides] = useState<Slide[]>([]);
+  const [current, setCurrent] = useState<number>(0);
+  const [fading, setFading] = useState<boolean>(false);
 
+  // ── Fetch slides from Supabase ──
   useEffect(() => {
+    const fetchSlides = async () => {
+      const { data, error } = await supabase
+        .from("hero_slides")
+        .select("*")
+        .order("order_index", { ascending: true });
+
+      if (!error && data) setSlides(data as Slide[]);
+    };
+    fetchSlides();
+  }, []);
+
+  // ── Auto slide ──
+  useEffect(() => {
+    if (slides.length === 0) return;
     const timer = setInterval(() => {
       setFading(true);
       setTimeout(() => {
@@ -22,21 +39,22 @@ export default function AboutHero() {
       }, 800);
     }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [slides]);
 
   return (
     <section className="relative py-28 px-6 min-h-[60vh] flex items-center justify-center overflow-hidden">
+
       {/* ── Carousel Images ── */}
       {slides.map((slide, i) => (
         <div
-          key={i}
+          key={slide.id}
           className="absolute inset-0 transition-opacity duration-700 ease-in-out"
           style={{ opacity: i === current ? (fading ? 0 : 1) : 0 }}
         >
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: `url('${slide.src}')`,
+              backgroundImage: `url('${slide.image_url}')`,
               animation:
                 i === current
                   ? "slowZoom 10s ease-in-out infinite alternate"
@@ -67,6 +85,7 @@ export default function AboutHero() {
 
       {/* ── Content ── */}
       <div className="relative z-10 max-w-4xl mx-auto text-center">
+
         {/* Badge */}
         <div className="inline-flex items-center gap-2 border border-white/15 bg-white/5 backdrop-blur-sm text-blue-300 px-4 py-1.5 rounded-full text-xs uppercase tracking-widest mb-8 font-[family-name:var(--font-lato)]">
           <span className="w-1.5 h-1.5 rounded-full bg-blue-300 animate-pulse" />

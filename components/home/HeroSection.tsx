@@ -1,19 +1,36 @@
 "use client";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabaseClient";
 
-const slides = [
-  { src: "/images/hero.jpg" },
-  { src: "/images/hero1.jpg" },
-  { src: "/images/hero2.jpg" },
-  { src: "/images/hero3.jpg" },
-];
+// ── Type definition ──
+type Slide = {
+  id: number;
+  image_url: string;
+  order_index: number;
+};
 
 export default function HeroSection() {
-  const [current, setCurrent] = useState(0);
-  const [fading, setFading] = useState(false);
+  const [slides, setSlides] = useState<Slide[]>([]);
+  const [current, setCurrent] = useState<number>(0);
+  const [fading, setFading] = useState<boolean>(false);
 
+  // ── Fetch slides from Supabase ──
   useEffect(() => {
+    const fetchSlides = async () => {
+      const { data, error } = await supabase
+        .from("hero_slides")
+        .select("*")
+        .order("order_index", { ascending: true });
+
+      if (!error && data) setSlides(data as Slide[]);
+    };
+    fetchSlides();
+  }, []);
+
+  // ── Auto slide ──
+  useEffect(() => {
+    if (slides.length === 0) return;
     const timer = setInterval(() => {
       setFading(true);
       setTimeout(() => {
@@ -22,7 +39,7 @@ export default function HeroSection() {
       }, 800);
     }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [slides]);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -30,14 +47,14 @@ export default function HeroSection() {
       {/* ── Full-screen Carousel Images ── */}
       {slides.map((slide, i) => (
         <div
-          key={i}
+          key={slide.id}
           className="absolute inset-0 transition-opacity duration-800 ease-in-out"
           style={{ opacity: i === current ? (fading ? 0 : 1) : 0 }}
         >
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: `url('${slide.src}')`,
+              backgroundImage: `url('${slide.image_url}')`,
               animation: i === current ? "slowZoom 10s ease-in-out infinite alternate" : "none",
             }}
           />
@@ -108,7 +125,7 @@ export default function HeroSection() {
         ))}
       </div>
 
-      {/* ── Bottom fade to page ── */}
+      {/* ── Bottom fade ── */}
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent" />
 
       {/* ── Scroll hint ── */}

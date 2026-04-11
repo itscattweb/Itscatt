@@ -52,8 +52,6 @@ export default function OurCenters() {
     <section className="relative py-24 px-6 bg-white overflow-hidden">
 
       {/* ── Blue fade top ── */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-800 via-blue-500 to-blue-800" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[200px] bg-blue-50/80 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-6xl mx-auto">
 
