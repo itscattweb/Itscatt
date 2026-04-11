@@ -9,7 +9,7 @@ import { supabase } from "@/lib/supabaseClient";
 type GalleryHeroImage = {
   id: number;
   src: string; // 
-  title: string; /
+  title: string; 
   category: string;
   span: string;
 };
