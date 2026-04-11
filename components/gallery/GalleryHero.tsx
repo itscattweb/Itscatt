@@ -8,8 +8,8 @@ import { supabase } from "@/lib/supabaseClient";
 // ── Type ──
 type GalleryHeroImage = {
   id: number;
-  src: string; // ✅ was image_url
-  title: string; // ✅ was alt
+  src: string; // 
+  title: string; /
   category: string;
   span: string;
 };
