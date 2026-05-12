@@ -4,7 +4,7 @@ import Image from "next/image";
 const founder = {
   name: "Fr. Dr. Jose Karekatt msfs",
   role: "Founder & Director",
-  photo: "/team/fr-jose-karekatt.jpg",
+  photo: "/images/jose.jpg",
   initials: "JK",
   bio: "Mastermind, founder and director of ITSSCAT-India. A priest of 24+ years with a Doctorate from the Salesian University, Rome, specialising in Youth Ministry and Criminal Justice. Served as State Director of Ministry to the Imprisoned under KCBC for 6 years, and spent the majority of his priestly life in education, social work and rehabilitation of youth.",
   highlights: [
@@ -101,23 +101,7 @@ export default function AboutTeam() {
               className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
             />
             {/* Fallback initials shown if no photo */}
-            <div
-              className="absolute inset-0 flex items-center justify-center"
-              style={{ background: "linear-gradient(135deg, #dbeafe, #eff6ff)" }}
-            >
-              <span
-                className="text-6xl font-bold"
-                style={{
-                  fontFamily: "'Playfair Display', serif",
-                  background: "linear-gradient(135deg, #1d4ed8, #0284c7)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                {founder.initials}
-              </span>
-            </div>
+           
             {/* Fade right into content */}
             <div
               className="absolute inset-y-0 right-0 w-16 hidden md:block"
@@ -265,14 +249,13 @@ export default function AboutTeam() {
         </div>
 
         {/* ── Supporting Cards ── */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+        {/* <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
           {team.map((member, i) => (
             <div
               key={i}
               className="group relative overflow-hidden border border-blue-100 bg-white transition-all duration-300 hover:border-blue-300"
               style={{ borderRadius: "20px" }}
             >
-              {/* Photo */}
               <div className="relative h-48 w-full overflow-hidden">
                 <Image
                   src={member.photo}
@@ -280,7 +263,6 @@ export default function AboutTeam() {
                   fill
                   className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                 />
-                {/* Fallback */}
                 <div
                   className="absolute inset-0 flex items-center justify-center"
                   style={{ background: "linear-gradient(135deg, #dbeafe, #eff6ff)" }}
@@ -298,12 +280,10 @@ export default function AboutTeam() {
                     {member.initials}
                   </span>
                 </div>
-                {/* Fade bottom */}
                 <div
                   className="absolute bottom-0 left-0 right-0 h-16"
                   style={{ background: "linear-gradient(to top, #ffffff, transparent)" }}
                 />
-                {/* Number */}
                 <div
                   className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full"
                   style={{
@@ -327,7 +307,6 @@ export default function AboutTeam() {
                 </div>
               </div>
 
-              {/* Content */}
               <div className="p-6">
                 <h3
                   className="mb-1 text-base font-semibold leading-snug"
@@ -379,7 +358,7 @@ export default function AboutTeam() {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
 
       </div>
     </section>

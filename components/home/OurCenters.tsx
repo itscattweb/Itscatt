@@ -20,7 +20,7 @@ const centers = [
       "Learning Resources",
     ],
     phone: "0091 471 234 1498",
-    image: "/images/hero.jpg",
+    image: "/images/triv.jpg",
     mapUrl: "https://maps.google.com/?q=Karamana,Trivandrum,Kerala",
     initials: "TVM",
   },

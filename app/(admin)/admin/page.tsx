@@ -4,13 +4,16 @@ import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/useToast";
 import { useGallery } from "@/hooks/useGallery";
 import { useHero } from "@/hooks/useHero";
+import { useTestimonials } from "@/hooks/useTestimonials";
 import { Toast } from "@/components/admin/Toast";
 import { GalleryUploadForm } from "@/components/admin/GalleryUploadForm";
 import { GalleryCard } from "@/components/admin/GalleryCard";
 import { HeroUploadForm } from "@/components/admin/HeroUploadForm";
 import { HeroCard } from "@/components/admin/HeroCard";
+import { TestimonialUploadForm } from "@/components/admin/Testimonialuploadform";
+import { TestimonialCard } from "@/components/admin/Testimonialcard";
 
-type Tab = "gallery" | "hero";
+type Tab = "gallery" | "hero" | "testimonials";
 
 export default function AdminPage() {
   const [tab, setTab] = useState<Tab>("gallery");
@@ -41,10 +44,34 @@ export default function AdminPage() {
     deleteHero,
   } = useHero(showToast);
 
+  const {
+    testimonials,
+    tName, setTName,
+    tCenter, setTCenter,
+    tGrade, setTGrade,
+    tAchievement, setTAchievement,
+    tQuote, setTQuote,
+    tOrder, setTOrder,
+    setTFile,
+    tFileKey,
+    tLoading,
+    fetchTestimonials,
+    addTestimonial,
+    toggleActive,
+    deleteTestimonial,
+  } = useTestimonials(showToast);
+
   useEffect(() => {
     fetchGallery();
     fetchHero();
+    fetchTestimonials();
   }, []);
+
+  const tabs: { key: Tab; label: string }[] = [
+    { key: "gallery", label: "Gallery Images" },
+    { key: "hero", label: "Hero Slides" },
+    { key: "testimonials", label: "Testimonials" },
+  ];
 
   return (
     <div className="min-h-screen bg-white px-6 py-10">
@@ -79,21 +106,21 @@ export default function AdminPage() {
               backgroundClip: "text",
             }}
           >
-            Manage Gallery
+            Manage Content
           </h1>
         </div>
 
         {/* Tabs */}
-        <div className="mb-8 flex gap-3">
-          {(["gallery", "hero"] as const).map((t) => (
+        <div className="mb-8 flex flex-wrap gap-3">
+          {tabs.map(({ key, label }) => (
             <button
-              key={t}
-              onClick={() => setTab(t)}
+              key={key}
+              onClick={() => setTab(key)}
               className="rounded-full border px-6 py-2 text-[11px] font-medium uppercase tracking-[0.2em] transition-all duration-300"
               style={{
-                borderColor: tab === t ? "#93c5fd" : "#dbeafe",
+                borderColor: tab === key ? "#93c5fd" : "#dbeafe",
                 background:
-                  tab === t
+                  tab === key
                     ? "linear-gradient(135deg, #eff6ff, #dbeafe)"
                     : "#fff",
               }}
@@ -101,7 +128,7 @@ export default function AdminPage() {
               <span
                 style={{
                   backgroundImage:
-                    tab === t
+                    tab === key
                       ? "linear-gradient(90deg, #1d4ed8, #0284c7)"
                       : "linear-gradient(90deg, #94a3b8, #64748b)",
                   WebkitBackgroundClip: "text",
@@ -109,13 +136,13 @@ export default function AdminPage() {
                   backgroundClip: "text",
                 }}
               >
-                {t === "gallery" ? "Gallery Images" : "Hero Slides"}
+                {label}
               </span>
             </button>
           ))}
         </div>
 
-        {/* Gallery Tab */}
+        {/* ── Gallery Tab ── */}
         {tab === "gallery" && (
           <div>
             <GalleryUploadForm
@@ -132,17 +159,13 @@ export default function AdminPage() {
             />
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
               {galleryImages.map((img) => (
-                <GalleryCard
-                  key={img.id}
-                  image={img}
-                  onDelete={deleteGallery}
-                />
+                <GalleryCard key={img.id} image={img} onDelete={deleteGallery} />
               ))}
             </div>
           </div>
         )}
 
-        {/* Hero Tab */}
+        {/* ── Hero Tab ── */}
         {tab === "hero" && (
           <div>
             <HeroUploadForm
@@ -155,15 +178,53 @@ export default function AdminPage() {
             />
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
               {heroSlides.map((slide) => (
-                <HeroCard
-                  key={slide.id}
-                  slide={slide}
-                  onDelete={deleteHero}
-                />
+                <HeroCard key={slide.id} slide={slide} onDelete={deleteHero} />
               ))}
             </div>
           </div>
         )}
+
+        {/* ── Testimonials Tab ── */}
+        {tab === "testimonials" && (
+          <div>
+            <TestimonialUploadForm
+              name={tName}
+              center={tCenter}
+              grade={tGrade}
+              achievement={tAchievement}
+              quote={tQuote}
+              order={tOrder}
+              loading={tLoading}
+              fileKey={tFileKey}
+              onNameChange={setTName}
+              onCenterChange={setTCenter}
+              onGradeChange={setTGrade}
+              onAchievementChange={setTAchievement}
+              onQuoteChange={setTQuote}
+              onOrderChange={setTOrder}
+              onFileChange={setTFile}
+              onSubmit={addTestimonial}
+            />
+
+            {testimonials.length === 0 ? (
+              <p className="py-10 text-center text-sm text-slate-400">
+                No testimonials yet. Add one above.
+              </p>
+            ) : (
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+                {testimonials.map((t) => (
+                  <TestimonialCard
+                    key={t.id}
+                    testimonial={t}
+                    onToggle={toggleActive}
+                    onDelete={deleteTestimonial}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
       </div>
 
       {toast && <Toast msg={toast.msg} ok={toast.ok} />}
