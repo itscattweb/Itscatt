@@ -43,7 +43,6 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-
       {/* ── Full-screen Carousel Images ── */}
       {slides.map((slide, i) => (
         <div
@@ -55,7 +54,10 @@ export default function HeroSection() {
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
               backgroundImage: `url('${slide.image_url}')`,
-              animation: i === current ? "slowZoom 10s ease-in-out infinite alternate" : "none",
+              animation:
+                i === current
+                  ? "slowZoom 10s ease-in-out infinite alternate"
+                  : "none",
             }}
           />
         </div>
@@ -66,7 +68,6 @@ export default function HeroSection() {
 
       {/* ── Centered Content ── */}
       <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
-
         {/* Badge */}
         <div className="inline-flex items-center gap-2 border border-white/20 bg-white/10 backdrop-blur-sm text-white/80 px-4 py-1.5 rounded-full text-xs uppercase tracking-widest mb-8 font-[family-name:var(--font-lato)]">
           <span className="w-1.5 h-1.5 rounded-full bg-blue-300 animate-pulse" />
@@ -83,17 +84,22 @@ export default function HeroSection() {
 
         {/* Subtext */}
         <p className="font-[family-name:var(--font-lato)] text-base md:text-lg text-white/65 max-w-xl mx-auto mb-10 leading-relaxed">
-          Empowering children from marginalized families with a home, quality education, and a brighter future.
+          Empowering children from marginalized families with a home, quality
+          education, and a brighter future.
         </p>
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
-            href="/donate"
+            href="upi://pay?pa=anasputhukkolli09@upi&pn=Donation&am=100&cu=INR"
             className="group bg-blue-600 hover:bg-blue-500 text-white font-bold px-9 py-4 rounded-full text-sm transition-all duration-300 shadow-xl shadow-blue-900/50 font-[family-name:var(--font-lato)] flex items-center gap-2"
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+              <path
+                fillRule="evenodd"
+                d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                clipRule="evenodd"
+              />
             </svg>
             Donate Now
           </Link>
@@ -113,7 +119,10 @@ export default function HeroSection() {
             key={i}
             onClick={() => {
               setFading(true);
-              setTimeout(() => { setCurrent(i); setFading(false); }, 800);
+              setTimeout(() => {
+                setCurrent(i);
+                setFading(false);
+              }, 800);
             }}
             className={`rounded-full transition-all duration-300 ${
               i === current
