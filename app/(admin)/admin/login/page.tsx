@@ -39,7 +39,7 @@ export default function AdminLoginPage() {
 
         {/* Header */}
         <div className="mb-8 text-center">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5">
+          <div className="mb-4 inline-flex item-centre  gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5">
             <div
               className="h-1.5 w-1.5 rounded-full"
               style={{ background: "linear-gradient(135deg, #3b82f6, #0ea5e9)" }}

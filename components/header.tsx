@@ -110,7 +110,7 @@ export default function Navbar() {
 
           {/* Donate Button */}
           <Link
-            href="upi://pay?pa=anas@ybl&pn=Anas&cu=INR"
+            href=""
             className="group bg-blue-600 hover:bg-blue-500 text-white font-bold px-9 py-4 rounded-full text-sm transition-all duration-300 shadow-xl shadow-blue-900/50 font-[family-name:var(--font-lato)] flex items-center gap-2"
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
